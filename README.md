@@ -1,2 +1,2 @@
 # Javascript
-code repo for javascript series at chaiaurcode yt
+code repo for javascript series from yt
