@@ -1,0 +1,89 @@
+<!-- 
+    Homework: GitHub Profile Card
+    Objective: Fetch and display a GitHub user's profile using XMLHttpRequest.
+    Requirements:
+        1. Fetch Data: Use XMLHttpRequest to get data from the GitHub API for a specific user (e.g., 'arsalan22as').
+        2. Display:
+             - Profile Photo (avatar)
+             - Follower Count
+             - Username
+        3. Styling: Centered card with dark background and light text.
+        4. Loading State: Show a loading message while fetching data.
+        5. Error Handling: Show an error message if the API request fails.
+        Bonus: Make the card responsive for desktop and mobile.
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Card</title>
+    <style>
+        body {
+            background-color: #212121;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .card {
+            background-color: #2d2d2d;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: block;
+            border: 3px solid #4a9eff;
+        }
+        .follower-count {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .username {
+            color: #4a9eff;
+            font-size: 20px;
+            margin: 10px 0;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div id="profile-content">
+            <p class="loading">Loading profile...</p>
+        </div>
+    </div>
+</body>
+<script>
+    const requestUrl = 'https://api.github.com/users/arsalan22as';
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', requestUrl);
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4 && xhr.status === 200){
+            const data = JSON.parse(this.response);
+            document.getElementById('profile-content').innerHTML = `
+                <img src="${data.avatar_url}" alt="Profile Photo" class="profile-img">
+                <h2 class="username">${data.login}</h2>
+                <p class="follower-count">${data.followers} Followers</p>
+                <p>${data.bio || ''}</p>
+            `;
+        }
+    }
+    xhr.send();
+</script>
+</html>
